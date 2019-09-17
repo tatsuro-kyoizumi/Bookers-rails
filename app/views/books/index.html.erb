@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<div class="flash">
+<% flash.each do |key, value| %>
+  <%= content_tag(:div, value, class: "#{key}") %>
+<% end %>
+</div>
+
+
+<h1>Books</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th><P>Title</P></th>
+				<th><P>Body</P></th>
+			</tr>
+		</thead>
+		
+			<% @books.each do |book| %>
+<tbody>
+			<tr>
+				<td><span><%= book.title %></span></td>
+				<td><span><%= book.body %></span></td>
+				<td><span><%= link_to "show", "/books/#{book.id}"%></span></td>
+				<td><span><%= link_to "edit", edit_book_path(book) %></span></td>
+				<td><span><%= link_to "destroy", book_path(book), method: :delete, "data-confirm" =>"Are you sure？" %></span></td>
+			</tr>
+		
+		</tbody>
+			<% end %>
+	</table>
+
+
+
+<h2>New book</h2>
+
+<%= form_for(@book) do |f| %>
+
+  <p>Title</p>
+  <%= f.text_field :title %>
+  
+  <p>Body</p>
+  <%= f.text_field :body %>
+	
+	
+  <br>
+	
+  <%= f.submit 'Create Book'%>
+
+<% end %>
+
+</body>
+</html>
