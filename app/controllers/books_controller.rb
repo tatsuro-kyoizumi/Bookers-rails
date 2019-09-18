@@ -5,17 +5,21 @@ class BooksController < ApplicationController
   end
 
   def create
-    book = Book.new(book_params)
-    if book.save # 保存できた場合
-      flash[:success] = 'Book was successfully created.'
-      redirect_to book_path(book.id)
+    # @book = Book.new(book_params)
+    # if @book.save
+    #   redirect_to book_path,
+    #   notice: 'Book was successfully created.'
+    # else
+    #   render :new
+    
+    @book = Book.new(book_params)
+    if @book.save # 保存できた場合
+      flash[:notice] = "Book was successfully created."
+      redirect_to book_path(@book.id)
     else # 保存出来なかった場合
-      flash[:blank] = 'Cannot be blank'
-      redirect_to books_path
+      @books = Book.all.order("id ASC")
+     render :index
     end
-    # book = Book.new(book_params)
-    # book.save
-    # redirect_to book_path(book)
    
 
   end
@@ -67,4 +71,3 @@ class BooksController < ApplicationController
       params.require(:book).permit(:title, :body)
   end
 end
-
